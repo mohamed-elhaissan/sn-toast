@@ -1,3 +1,4 @@
+'use client'
 import {useEffect, useState} from "react";
 import {ToastProps} from "./type.ts";
 import {createPortal} from "react-dom";
