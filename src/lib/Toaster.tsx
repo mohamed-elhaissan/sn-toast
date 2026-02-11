@@ -25,6 +25,7 @@ export function Toaster({
                             richColor = false,
                         }: CustomProps) {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
+    const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
     const {initial, animate, exit} = getToastAnimation(position);
     const positionValue = getPosition(position);
 
@@ -39,8 +40,16 @@ export function Toaster({
         return unsubscribe;
     }, []);
     useEffect(() => {
+        setPortalTarget(document.body);
+    }, []);
+
+    useEffect(() => {
         injectStyles()
     }, [])
+
+    if (!portalTarget) {
+        return null;
+    }
 
     return createPortal(
         <div
@@ -61,6 +70,6 @@ export function Toaster({
                 ))}
             </AnimatePresence>
         </div>,
-        document.body
+        portalTarget
     );
 }
