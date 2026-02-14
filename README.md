@@ -1,23 +1,74 @@
-## sn-toast
+# sn-toast (Buzzly)
 
-A beautiful, animated toast notification library for React with Tailwind CSS.
+A beautiful, animated toast notification library for React with Tailwind CSS and Framer Motion.
 
-## Run tests
+## Features
 
-From the project root (`sn-toast`), run:
+- **Lightweight** — Simple API with minimal setup
+- **Animated** — Smooth enter/exit animations powered by Framer Motion
+- **Multiple types** — Success, error, warning, info, and normal variants
+- **Customizable** — Configurable position, rich colors, and styling
+- **TypeScript** — Full type definitions included
+
+## Installation
 
 ```bash
-npm test
+npm install sn-toast@latest
 ```
 
-This executes:
+### Peer Dependencies
 
-```bash
-node --test tests/*.test.mjs
+- React >= 18.0.0
+- React-DOM >= 18.0.0
+
+## Quick Start
+
+1. Add the `<Toaster />` component to your app root (e.g. `App.tsx`):
+
+```tsx
+import { Toaster } from 'sn-toast'
+
+function App() {
+  return (
+    <>
+      <Toaster position="bottom-right" />
+      {/* Your app content */}
+    </>
+  )
+}
 ```
 
-### If you see `Missing script: "test"`
+2. Use the `toast` API anywhere in your app:
 
-- Make sure you're inside this repository root before running the command.
-- Run `npm run` to verify the `test` script is listed.
-- If you're running from another project (for example a Next.js app that installed `sn-toast` as a dependency), note that this package does **not** publish its internal `tests/` files to npm, so run tests from this repository clone.
+```tsx
+import { toast } from 'sn-toast'
+
+// Show notifications
+toast.success('Operation completed!')
+toast.error('Something went wrong')
+toast.warning('Please check your input')
+toast.info('Here's some information')
+toast.normal('Just a message')
+```
+
+## API
+
+### Toast Methods
+
+| Method | Description |
+|--------|-------------|
+| `toast.success(message)` | Show a success toast |
+| `toast.error(message)` | Show an error toast |
+| `toast.warning(message)` | Show a warning toast |
+| `toast.info(message)` | Show an info toast |
+| `toast.normal(message)` | Show a normal/default toast |
+
+### Toaster Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right" \| "top-center" \| "bottom-center"` | `"bottom-right"` | Position of the toast container |
+| `richColor` | `boolean` | `false` | Enable richer color variants |
+
+
+MIT © [Mohamed elhaissan](https://github.com/mohamed-elhaissan)
