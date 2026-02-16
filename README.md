@@ -47,7 +47,7 @@ import { toast } from 'sn-toast'
 toast.success('Operation completed!')
 toast.error('Something went wrong')
 toast.warning('Please check your input')
-toast.info('Here's some information')
+toast.info("Here's some information")
 toast.normal('Just a message')
 ```
 
@@ -69,6 +69,27 @@ toast.normal('Just a message')
 |------|------|---------|-------------|
 | `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right" \| "top-center" \| "bottom-center"` | `"bottom-right"` | Position of the toast container |
 | `richColor` | `boolean` | `false` | Enable richer color variants |
+
+## CI/CD
+
+This repository includes GitHub Actions workflows:
+
+- **CI** (`.github/workflows/ci.yml`) runs on pull requests and pushes to `main`.
+  - Installs dependencies
+  - Runs lint
+  - Runs tests
+  - Builds the package
+- **Publish** (`.github/workflows/publish.yml`) runs when a GitHub release is published (or manually via workflow dispatch).
+  - Installs dependencies
+  - Verifies the build
+  - Runs tests
+  - Publishes to npm
+
+### Required secret for publish
+
+Set this repository secret before using the publish workflow:
+
+- `NPM_TOKEN`: npm access token with publish permissions for this package.
 
 
 MIT © [Mohamed elhaissan](https://github.com/mohamed-elhaissan)
