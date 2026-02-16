@@ -1,4 +1,4 @@
-# sn-toast (Buzzly)
+# sn-toast https://www.sn-toast.xyz/
 
 A beautiful, animated toast notification library for React with Tailwind CSS and Framer Motion.
 
