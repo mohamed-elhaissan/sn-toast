@@ -76,5 +76,8 @@
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "overrides": {
+    "rollup": "^4.59.0"
   }
 }
