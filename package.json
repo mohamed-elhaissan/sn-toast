@@ -70,9 +70,13 @@
     "globals": "^16.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "rollup": "^4.59.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "overrides": {
+    "rollup": "^4.59.0"
   }
 }

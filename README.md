@@ -47,7 +47,7 @@ import { toast } from 'sn-toast'
 toast.success('Operation completed!')
 toast.error('Something went wrong')
 toast.warning('Please check your input')
-toast.info('Here's some information')
+toast.info("Here's some information")
 toast.normal('Just a message')
 ```
 
