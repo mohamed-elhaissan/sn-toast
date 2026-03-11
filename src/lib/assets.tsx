@@ -1,4 +1,4 @@
-import {ToastTypes} from "./type.ts";
+import { ToastTypes } from "./type.ts";
 
 const getType = (iconType: ToastTypes) => {
     switch (iconType) {
@@ -14,10 +14,11 @@ const getType = (iconType: ToastTypes) => {
             return null;
     }
 };
+
 const getBackgroundColor = ({
-                                type,
-                                richColor,
-                            }: {
+    type,
+    richColor,
+}: {
     type: string;
     richColor: boolean;
 }) => {
@@ -38,72 +39,17 @@ const getBackgroundColor = ({
     return "default-toast";
 };
 
-const getPosition = (position: string) => {
-    switch (position) {
-        case "top-left":
-            return "top-left";
-        case "top-right":
-            return "top-right";
-        case "bottom-left":
-            return "bottom-left";
-        case "bottom-right":
-            return "bottom-right";
-        case "top-center":
-            return "top-center";
-        case "bottom-center":
-            return "bottom-center";
-        default:
-            return "bottom-right";
-    }
+const getToastAnimation = (position: string) => {
+    const y = position.startsWith("top") ? -50 : 50;
+    return {
+        initial: { opacity: 0, y },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y },
+    };
 };
 
-const getToastAnimation = (toastPosition: string) => {
-    switch (toastPosition) {
-        case "bottom-left":
-            return {
-                initial: {opacity: 0, y: 50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: 50},
-            };
-        case "bottom-right":
-            return {
-                initial: {opacity: 0, y: 50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: 50},
-            };
-        case "top-left":
-            return {
-                initial: {opacity: 0, y: -50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: -50},
-            };
-        case "top-right":
-            return {
-                initial: {opacity: 0, y: -50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: -50},
-            };
-        case "top-center":
-            return {
-                initial: {opacity: 0, y: -50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: -50},
-            };
-        case "bottom-center":
-            return {
-                initial: {opacity: 0, y: 50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: 50},
-            };
-        default:
-            return {
-                initial: {opacity: 0, y: 50},
-                animate: {opacity: 1, y: 0},
-                exit: {opacity: 0, y: 50},
-            };
-    }
-};
-const successIcon = (<svg
+const successIcon = (
+    <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -149,6 +95,7 @@ const infoIcon = (
         />
     </svg>
 );
+
 const errorIcon = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -165,23 +112,6 @@ const errorIcon = (
     </svg>
 );
 
-const framerToastVaraints = {
-    hidden: {
-        opacity: 0,
-        y: 50,
-    },
-    opened: {
-        opacity: 1,
-        y: 0,
-    },
-    exit: {
-        opacity: 0,
-        y: -50,
-    },
-};
-
-export const itemsVariants = framerToastVaraints;
-export {getType};
-export {getBackgroundColor};
-export {getPosition};
-export {getToastAnimation};
+export { getType };
+export { getBackgroundColor };
+export { getToastAnimation };

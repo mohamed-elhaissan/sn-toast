@@ -1,70 +1,85 @@
 'use client'
-import {useEffect, useState} from "react";
-import {ToastProps} from "./type.ts";
-import {createPortal} from "react-dom";
-import {AnimatePresence} from "framer-motion";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { ToastProps, ToastPosition } from "./type.ts";
+import { createPortal } from "react-dom";
+import { AnimatePresence } from "framer-motion";
 import Toast from "./Toast.tsx";
-import {toast} from "./toast-manager.ts";
-import {getPosition, getToastAnimation} from "./assets.tsx";
-import {injectStyles} from "./inject-style.ts";
+import { toast } from "./toast-manager.ts";
+import { getToastAnimation } from "./assets.tsx";
+import { injectStyles } from "./inject-style.ts";
 
 interface CustomProps {
-    type?: ToastProps;
-    position?:
-        | "top-left"
-        | "top-right"
-        | "bottom-left"
-        | "bottom-right"
-        | "top-center"
-        | "bottom-center";
-    richColor?: boolean | false;
+    position?: ToastPosition;
+    richColor?: boolean;
 }
 
 export function Toaster({
-                            position = "bottom-right",
-                            richColor = false,
-                        }: CustomProps) {
+    position = "bottom-right",
+    richColor = false,
+}: CustomProps) {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
     const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
-    const {initial, animate, exit} = getToastAnimation(position);
-    const positionValue = getPosition(position);
+    const timeoutIds = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+    const { initial, animate, exit } = useMemo(
+        () => getToastAnimation(position),
+        [position]
+    );
+
+    useEffect(() => {
+        setPortalTarget(document.body);
+        injectStyles();
+    }, []);
 
     useEffect(() => {
         const unsubscribe = toast._subscribe((newToast) => {
             setToasts((prev) => [...prev, newToast]);
-            setTimeout(() => {
+
+            const timeoutId = setTimeout(() => {
                 setToasts((prev) => prev.filter((t) => t.id !== newToast.id));
+                if (newToast.id) {
+                    timeoutIds.current.delete(newToast.id);
+                }
             }, 3000);
+
+            if (newToast.id) {
+                timeoutIds.current.set(newToast.id, timeoutId);
+            }
         });
 
-        return unsubscribe;
-    }, []);
-    useEffect(() => {
-        setPortalTarget(document.body);
+        return () => {
+            unsubscribe();
+            timeoutIds.current.forEach((id) => clearTimeout(id));
+            timeoutIds.current.clear();
+        };
     }, []);
 
-    useEffect(() => {
-        injectStyles()
-    }, [])
+    const dismissToast = (id: string) => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+        const timeoutId = timeoutIds.current.get(id);
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutIds.current.delete(id);
+        }
+    };
 
     if (!portalTarget) {
         return null;
     }
 
     return createPortal(
-        <div
-            className={`toast-container ${positionValue}   sm:w-1/3  xl:w-1/5 2xl:w-1/6 `}
-        >
+        <div className={`toast-container ${position}`}>
             <AnimatePresence>
-                {toasts?.map((toast, index) => (
-                    <div key={toast.id} style={{zIndex: 10 + index}}>
+                {toasts.map((t, index) => (
+                    <div key={t.id} style={{ zIndex: 10 + index }}>
                         <Toast
                             initial={initial}
                             animate={animate}
                             exit={exit}
-                            type={toast.type}
+                            type={t.type}
                             richColor={richColor}
-                            message={toast.message}
+                            message={t.message}
+                            onClose={t.id ? () => dismissToast(t.id!) : undefined}
                         />
                     </div>
                 ))}

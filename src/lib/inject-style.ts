@@ -9,8 +9,6 @@ export const injectStyles = () => {
     const style = document.createElement('style');
     style.id = styleID
     style.textContent = `
-    @import url("https://cdn.jsdelivr.net/npm/@geist-ui/fonts@latest/font.css");
-
     :root {
     /* success Toast */
     --success-background: #d2f3d7;
@@ -36,15 +34,16 @@ export const injectStyles = () => {
 
 .toast-container {
     position: fixed;
-    width: 20%;
+    width: 360px;
+    max-width: calc(100vw - 2rem);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin: 1rem;
+    z-index: 9999;
 }
 
 .toast {
-    font-family: 'Geist', sans-serif;
     letter-spacing: -0.025em;
     width: 100%;
     padding: 1rem;
@@ -88,46 +87,56 @@ export const injectStyles = () => {
     border-color: var(--info-border-color);
     color: var(--info-text-color);
 }
+
 .top-left {
   top: 0;
   left: 0;
-
 }
 
 .top-right {
   top: 0;
   right: 0;
-
 }
 
 .bottom-left {
   bottom: 0;
   left: 0;
-
 }
 
 .bottom-right {
   bottom: 0;
   right: 0;
-
 }
 
-/* Center positions */
 .top-center {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-
 }
 
 .bottom-center {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-
 }
 
+.toast-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
 
+.toast-close:hover {
+  opacity: 1;
+}
 `
     document.head.appendChild(style)
 }
