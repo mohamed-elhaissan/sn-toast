@@ -11,16 +11,8 @@ export type ToastPosition =
 export interface ToastProps {
   message?: string;
   id?: string;
-  toastAnimation?: (position : string) => {
-    initial : object;
-    animate : object;
-    exit : object;
-  };
-  richColor?: boolean | false;
+  richColor?: boolean;
   theme?: ToastTheme;
-  type: ToastTypes | "normal";
+  type: ToastTypes;
   position?: ToastPosition;
-  description?: string;
-  icon?: string;
-  passPositionValue?: (position: string) => void;
 }

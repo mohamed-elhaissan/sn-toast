@@ -3,39 +3,37 @@ import { ToastProps } from "./type";
 export type ToastListener = (toast: ToastProps) => void;
 
 export class ToastManager {
-  private listnner = new Set<ToastListener>();
+  private listeners = new Set<ToastListener>();
 
   private emit(toast: ToastProps) {
-    //generate a random id for the toast
     const id = crypto.randomUUID();
-    this.listnner.forEach((listener) => {
+    this.listeners.forEach((listener) => {
       listener({ ...toast, id });
     });
   }
 
   success(message: string) {
-    this.emit({ type: "success", message  });
+    this.emit({ type: "success", message });
   }
   error(message: string) {
-    this.emit({ type: "error", message  });
+    this.emit({ type: "error", message });
   }
   warning(message: string) {
-    this.emit({ type: "warning", message  });
+    this.emit({ type: "warning", message });
   }
   info(message: string) {
-    this.emit({ type: "info", message  });
+    this.emit({ type: "info", message });
   }
   normal(message: string) {
-    this.emit({ type: "normal", message  });
+    this.emit({ type: "normal", message });
   }
 
   _subscribe(listener: ToastListener) {
-    this.listnner.add(listener);
+    this.listeners.add(listener);
     return () => {
-      this.listnner.delete(listener);
+      this.listeners.delete(listener);
     };
   }
 }
-
 
 export const toast = new ToastManager();

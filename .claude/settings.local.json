@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm audit)",
+      "Bash(npm audit --json)",
+      "Bash(npx tsc:*)",
+      "Bash(mkdir -p d:/work/Buzzly/.claude/agents)",
+      "Bash(mv d:/work/Buzzly/security-reviewer.md d:/work/Buzzly/.claude/agents/security-reviewer.md)",
+      "Bash(node --test tests/*.test.mjs)"
+    ]
+  }
+}

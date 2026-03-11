@@ -13,12 +13,13 @@ export default defineConfig({
             fileName: 'Buzzly',
         },
         rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime', 'tailwindcss'],
+            external: ['react', 'react-dom', 'react/jsx-runtime', 'tailwindcss', 'framer-motion'],
             output: {
                 globals: {
                     react: 'React',
                     'react-dom': 'ReactDOM',
                     'react/jsx-runtime': 'jsxRuntime',
+                    'framer-motion': 'FramerMotion',
                 },
             },
         },
